@@ -5,6 +5,7 @@
   "repository": "git@github.com:arabovs/openai.git",
   "author": "Simeon Arabov <s.arabov@myxrobotics.com>",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/style": "^0.8.0",

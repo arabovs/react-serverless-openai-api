@@ -7,7 +7,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const completion = await openai.createImage({
+const completion = await openai.createChatCompletion({
   model: "gpt-3.5-turbo",
   messages: [
     {
