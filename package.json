@@ -12,7 +12,6 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.0",
     "@mui/styles": "^5.12.3",
-    "dotenv": "^16.0.3",
     "gatsby": "^5.9.1",
     "gatsby-plugin-netlify": "^5.1.0",
     "openai": "^3.2.1",
