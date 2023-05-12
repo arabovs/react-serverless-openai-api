@@ -9,6 +9,7 @@ const StyledImg = styled("img")({
 
 const PROMPT =
   "A developer working on his desk at night paying for each API call";
+
 const options = ["OpenAI", "MidJourney", "Stable Diffusion"];
 
 export default function MyComponent() {
