@@ -1,5 +1,14 @@
 import * as React from "react";
-import { Box, Button, MenuItem, TextField, Container } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  TextField,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { Link } from "gatsby";
 import { styled } from "@mui/material/styles";
 
 const StyledImg = styled("img")({
@@ -57,21 +66,39 @@ const IndexPage = () => {
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column" }}>
-      <TextField
-        select
-        label="Select an option"
-        value={selectedOption}
-        margin="normal"
-        sx={{ width: 200 }}
-        onChange={handleOptionChange}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        {options.map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
-      <Box sx={{ display: "flex", mt: 5 }}>
+        <TextField
+          select
+          label="Select an option"
+          value={selectedOption}
+          margin="normal"
+          sx={{ width: 200 }}
+          onChange={handleOptionChange}
+        >
+          {options.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </TextField>
+        <Box sx={{ display: "flex" }}>
+          <Typography>Authoured by:</Typography>
+          <Box sx={{ ml: 1, mr: 1 }}>
+            <img
+              width={24}
+              src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg"
+            />
+          </Box>
+          <Link to="https://github.com/arabovs/">arabovs</Link>
+        </Box>
+      </Box>
+      <Box sx={{ display: "flex", mt: 2 }}>
         <TextField
           fullWidth
           label="Enter Prompt"
@@ -88,17 +115,48 @@ const IndexPage = () => {
             fetchTextPrompt(prompt);
           }}
           variant="contained"
-          sx={{ width: 200, mt: 5 }}
+          sx={{ width: 200, mt: 2 }}
         >
           Submit
         </Button>
       </Box>
-      <Box sx={{ display: "flex", mt: 5 }}>
-        <TextField fullWidth disabled value={chat} multiline rows={16} />
+      <Box sx={{ margin: "normal", mt: 2 }}>
+        <Grid container sx={{ display: "flex", margin: "normal" }}>
+          <Grid
+            item
+            xs={6}
+            sx={{ flexWrap: "wrap", margin: "normal", display: "flex" }}
+          >
+            <img
+              width={24}
+              src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
+            />
+            <Typography sx={{ ml: 1 }}>OpenAI ChatGPT3.5:</Typography>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sx={{ flexWrap: "wrap", margin: "normal", display: "flex" }}
+          >
+            <img
+              width={24}
+              src="https://c.clc2l.com/c/thumbnail75webp/t/D/a/Dall-E-hXSMxM.png"
+            />
+            <Typography sx={{ ml: 1 }}>OpenAI D-alle:</Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ flexWrap: "wrap", mt: 2 }}>
+            <TextField fullWidth disabled value={chat} multiline rows={21} />
+          </Grid>
+          <Grid item xs={6} sx={{ flexWrap: "wrap", mt: 2 }}>
+            <StyledImg sx={{ ml: 5 }} src={image} />
+          </Grid>
+        </Grid>
       </Box>
-      <Box>
-        <StyledImg sx={{ mt: 5 }} src={image} />
-      </Box>
+      <Typography marginTop={1}>Power by:</Typography>
+      <StyledImg
+        sx={{ mt: 1 }}
+        src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg"
+      />
     </Container>
   );
 };
