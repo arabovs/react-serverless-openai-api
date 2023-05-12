@@ -7,26 +7,30 @@ const StyledImg = styled("img")({
   height: "auto",
 });
 
-const PROMPT =
-  "A developer working on his desk at night paying for each API call";
-
 const options = ["OpenAI", "MidJourney", "Stable Diffusion"];
 
-export default function MyComponent() {
+const IndexPage = () => {
   const [selectedOption, setSelectedOption] = React.useState(options[0]);
-  const [image, setImage] = React.useState(
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/330px-Image_created_with_a_mobile_phone.png"
-  );
-  const [chat, setChat] = React.useState("No prompt yet");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  const fetchDalleImage = async () => {
+  const [image, setImage] = React.useState(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/330px-Image_created_with_a_mobile_phone.png"
+  );
+
+  const [chat, setChat] = React.useState("Please enter prompt :)");
+
+  const [prompt, setPrompt] = React.useState("");
+  const handlePromptChange = (event) => {
+    setPrompt(event.target.value);
+  };
+
+  const fetchDalleImage = async (prompt: string) => {
     const result = await fetch("/api/dalle", {
       method: "POST",
-      body: JSON.stringify({ prompt: PROMPT }),
+      body: JSON.stringify({ prompt: prompt }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -37,10 +41,10 @@ export default function MyComponent() {
     return result;
   };
 
-  const fetchTextPrompt = async () => {
+  const fetchTextPrompt = async (prompt: string) => {
     const result = await fetch("/api/chatgpt", {
       method: "POST",
-      body: JSON.stringify({ prompt: PROMPT }),
+      body: JSON.stringify({ prompt: prompt }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -68,7 +72,26 @@ export default function MyComponent() {
         ))}
       </TextField>
       <Box sx={{ display: "flex", mt: 5 }}>
-        <TextField fullWidth label="Enter prompt" multiline rows={4} />
+        <TextField
+          fullWidth
+          label="Enter Prompt"
+          value={prompt}
+          onChange={handlePromptChange}
+          multiline
+          rows={4}
+        />
+      </Box>
+      <Box>
+        <Button
+          onClick={() => {
+            fetchDalleImage(prompt);
+            fetchTextPrompt(prompt);
+          }}
+          variant="contained"
+          sx={{ width: 200, mt: 5 }}
+        >
+          Submit
+        </Button>
       </Box>
       <Box sx={{ display: "flex", mt: 5 }}>
         <TextField fullWidth disabled value={chat} multiline rows={16} />
@@ -76,16 +99,8 @@ export default function MyComponent() {
       <Box>
         <StyledImg sx={{ mt: 5 }} src={image} />
       </Box>
-      <Button
-        onClick={() => {
-          fetchDalleImage();
-          fetchTextPrompt();
-        }}
-        variant="contained"
-        sx={{ width: 200, mt: 5 }}
-      >
-        Submit
-      </Button>
     </Container>
   );
-}
+};
+
+export default IndexPage;
