@@ -1,0 +1,21 @@
+{
+  "id": "chatcmpl-7FVGmP0HXidmfzzstd5KgzGpIchBM",
+  "object": "chat.completion",
+  "created": 1683929476,
+  "model": "gpt-3.5-turbo-0301",
+  "usage": {
+    "prompt_tokens": 99,
+    "completion_tokens": 160,
+    "total_tokens": 259
+  },
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "Today's weather forecast predicts a sunny and warm day with some clouds. However, as the day progresses, the cloud coverage will increase, which might lead to locally heavy rains and rare thunderstorms. Additionally, a weak to moderate wind will blow in from the southeast direction, and due to the Povardarieto, it might intensify at times.\n\nIf you're in Skopje, expect similar weather with a sunny, yet moderately cloudy sky and a weak to moderate wind blowing from the southeast. With the sun shining bright, it is an excellent day to go out and enjoy the weather, be it for a picnic or a stroll in the park. \n\nAs always, it's essential to stay updated on the weather conditions and take the necessary precautions to stay safe in case of sudden changes."
+      },
+      "finish_reason": "stop",
+      "index": 0
+    }
+  ]
+}
