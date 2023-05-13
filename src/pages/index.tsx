@@ -142,7 +142,7 @@ const IndexPage = () => {
               width={24}
               src="https://c.clc2l.com/c/thumbnail75webp/t/D/a/Dall-E-hXSMxM.png"
             />
-            <Typography sx={{ ml: 1 }}>OpenAI D-alle:</Typography>
+            <Typography sx={{ ml: 1 }}>OpenAI DALL-E:</Typography>
           </Grid>
           <Grid item xs={6} sx={{ flexWrap: "wrap", mt: 2 }}>
             <TextField fullWidth disabled value={chat} multiline rows={21} />
