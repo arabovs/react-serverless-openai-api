@@ -1,6 +1,8 @@
 # openai
 
-Welcome to our small Gatsby Serverless App that implements calls to both OpenAI Chat GPT 3.5 and Dalle.
+Tiny Gatsby Serverless App that implements calls to both OpenAI Chat GPT 3.5 and Dalle.
+
+Please note all rights reserved to OpenAI and that this repo is made by me as a hobby.
 
 Enjoy
 
