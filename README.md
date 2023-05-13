@@ -1,4 +1,4 @@
-# openai
+# React Serverless OpenAI ChatGPT and DALL-E generator
 
 Tiny Gatsby Serverless App that implements calls to both OpenAI Chat GPT 3.5 and Dalle.
 
