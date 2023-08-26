@@ -57,9 +57,9 @@ const IndexPage = () => {
       }}
     >
       <Box display="flex" justifyContent="center" alignItems="center">
-        {/* <Typography variant="h4" sx={{ color: "pink" }}>
+        <Typography variant="h4" sx={{ color: "pink" }}>
           ♥ Цвети да оздравяваш бързо ♥
-        </Typography> */}
+        </Typography>
       </Box>{" "}
       {loading && (
         <Typography variant="h4">
@@ -105,7 +105,9 @@ const IndexPage = () => {
             <Typography sx={{ ml: 1 }}>Your daily horoscope:</Typography>
           </Grid>
           <Grid item xs={12} sx={{ flexWrap: "wrap", mt: 2 }}>
-            <Typography>{chat.replace("\n", "")}</Typography>
+            <Typography sx={{ fontStyle: "Apple Color Emoji" }}>
+              {chat.replace(/\n/g, "")}
+            </Typography>
           </Grid>
         </Grid>
       </Box>
