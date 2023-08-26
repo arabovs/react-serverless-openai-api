@@ -6,14 +6,15 @@
   "author": "Simeon Arabov <s.arabov@myxrobotics.com>",
   "license": "MIT",
   "dependencies": {
-    "openai": "^4.0.0",
     "@emotion/react": "^11.11.0",
     "@emotion/style": "^0.8.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.0",
     "@mui/styles": "^5.12.3",
+    "encoding": "^0.1.13",
     "gatsby": "^5.9.1",
     "gatsby-plugin-netlify": "^5.1.0",
+    "openai": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
