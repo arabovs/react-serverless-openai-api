@@ -39,24 +39,6 @@ const IndexPage = () => {
   const [loading, setLoading] = React.useState(false);
   const [chat, setChat] = React.useState("Please click on a zodiac sign :)");
 
-  const [prompt, setPrompt] = React.useState("");
-  const handlePromptChange = (event) => {
-    setPrompt(event.target.value);
-  };
-
-  const fetchDalleImage = async (prompt: string) => {
-    const result = await fetch("/api/dalle", {
-      method: "POST",
-      body: JSON.stringify({ prompt: prompt }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const message = JSON.parse(data.message);
-      })
-      .catch((error) => console.error(error));
-    return result;
-  };
-
   const fetchTextPrompt = async (prompt: string) => {
     setLoading(true);
     const result = await fetch("/api/chatgpt", {
