@@ -3,9 +3,8 @@ import { GatsbyFunctionRequest, GatsbyFunctionResponse } from "gatsby";
 import OpenAI from "openai";
 
 const getTextPrompt = async (prompt: string) => {
-  
   const openai = new OpenAI({
-    apiKey: process.env.GATSBY_OPENAI_API_KEY
+    apiKey: process.env.GATSBY_OPENAI_API_KEY,
   });
 
   const completion = await openai.chat.completions.create({
