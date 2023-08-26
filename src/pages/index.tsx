@@ -35,21 +35,8 @@ const StyledImg = styled("img")({
   height: "auto",
 });
 
-const options = ["OpenAI", "MidJourney", "Stable Diffusion"];
-
 const IndexPage = () => {
-  const [selectedOption, setSelectedOption] = React.useState(options[0]);
-
   const [loading, setLoading] = React.useState(false);
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const [image, setImage] = React.useState(
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/330px-Image_created_with_a_mobile_phone.png"
-  );
-
   const [chat, setChat] = React.useState("Please click on a zodiac sign :)");
 
   const [prompt, setPrompt] = React.useState("");
@@ -65,8 +52,6 @@ const IndexPage = () => {
       .then((response) => response.json())
       .then((data) => {
         const message = JSON.parse(data.message);
-        console.log(message);
-        setImage(message[0].url);
       })
       .catch((error) => console.error(error));
     return result;
