@@ -57,9 +57,7 @@ const IndexPage = () => {
       }}
     >
       <Box display="flex" justifyContent="center" alignItems="center">
-        <Typography variant="h4" sx={{ color: "pink" }}>
-          ♥ Цвети да оздравяваш бързо ♥
-        </Typography>
+        <Typography variant="h4">Your daily choroscope</Typography>
       </Box>{" "}
       {loading && (
         <Typography variant="h4">
