@@ -1,18 +1,19 @@
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from "gatsby";
 
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
 const getImageUrl = async (prompt: string) => {
-  const configuration = new Configuration({
-    apiKey: process.env.GATSBY_OPENAI_API_KEY,
+  
+  const openai = new OpenAI({
+    apiKey: process.env.GATSBY_OPENAI_API_KEY
   });
-  const openai = new OpenAIApi(configuration);
-  const completion = await openai.createImage({
-    prompt: prompt,
+  const completion = await openai.images.generate({
+    prompt: "A beautiful astrological woman or man holding flower with sun and moon " + prompt,
     response_format: "url",
     size: "512x512",
   });
   const result = JSON.stringify(completion.data, null, 2);
+  
   //@ts-ignore
   return result;
 };

@@ -1,14 +1,14 @@
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from "gatsby";
 
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
 const getTextPrompt = async (prompt: string) => {
-  const configuration = new Configuration({
-    apiKey: process.env.GATSBY_OPENAI_API_KEY,
+  
+  const openai = new OpenAI({
+    apiKey: process.env.GATSBY_OPENAI_API_KEY
   });
-  const openai = new OpenAIApi(configuration);
 
-  const completion = await openai.createChatCompletion({
+  const completion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
       {
@@ -18,7 +18,7 @@ const getTextPrompt = async (prompt: string) => {
     ],
   });
 
-  const result = JSON.stringify(completion.data, null, 2);
+  const result = JSON.stringify(completion.choices[0].message.content, null, 2);
   //@ts-ignore
   return result;
 };

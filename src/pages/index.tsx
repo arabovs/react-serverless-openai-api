@@ -11,6 +11,25 @@ import {
 import { Link } from "gatsby";
 import { styled } from "@mui/material/styles";
 
+const getImageUrl = (index: number) => {
+  return `https://cardsbg.s3.eu-north-1.amazonaws.com/zodiac-${index}.jpg`;
+};
+
+const star_signs = [
+  { name: "Aries", date: "(March 21 - April 19)" },
+  { name: "Taurus", date: "(April 20 - May 20)" },
+  { name: "Gemini", date: "(May 21 - June 20)" },
+  { name: "Cancer", date: "(June 21 - July 22)" },
+  { name: "Leo", date: "(July 23 - August 22)" },
+  { name: "Virgo", date: "(August 23 - September 22)" },
+  { name: "Libra", date: "(September 23 - October 22)" },
+  { name: "Scorpio", date: "(October 23 - November 21)" },
+  { name: "Sagittarius", date: "(November 22 - December 21)" },
+  { name: "Capricorn", date: "(December 22 - January 19)" },
+  { name: "Aquarius", date: "(January 20 - February 18)" },
+  { name: "Pisces", date: "(February 19 - March 20)" },
+];
+
 const StyledImg = styled("img")({
   maxWidth: "100%",
   height: "auto",
@@ -21,6 +40,8 @@ const options = ["OpenAI", "MidJourney", "Stable Diffusion"];
 const IndexPage = () => {
   const [selectedOption, setSelectedOption] = React.useState(options[0]);
 
+  const [loading, setLoading] = React.useState(false);
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -29,7 +50,7 @@ const IndexPage = () => {
     "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/330px-Image_created_with_a_mobile_phone.png"
   );
 
-  const [chat, setChat] = React.useState("Please enter prompt :)");
+  const [chat, setChat] = React.useState("Please click on a zodiac sign :)");
 
   const [prompt, setPrompt] = React.useState("");
   const handlePromptChange = (event) => {
@@ -44,21 +65,23 @@ const IndexPage = () => {
       .then((response) => response.json())
       .then((data) => {
         const message = JSON.parse(data.message);
-        setImage(message.data[0]?.url);
+        console.log(message);
+        setImage(message[0].url);
       })
       .catch((error) => console.error(error));
     return result;
   };
 
   const fetchTextPrompt = async (prompt: string) => {
+    setLoading(true);
     const result = await fetch("/api/chatgpt", {
       method: "POST",
       body: JSON.stringify({ prompt: prompt }),
     })
       .then((response) => response.json())
       .then((data) => {
-        const message = JSON.parse(data.message);
-        setChat(message.choices[0].message?.content);
+        setChat(data.message);
+        setLoading(false);
       })
       .catch((error) => console.error(error));
     return result;
@@ -66,6 +89,59 @@ const IndexPage = () => {
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column" }}>
+      <Box display="flex" justifyContent="center" alignItems="center">
+        {/* <Typography variant="h4" sx={{ color: "pink" }}>
+          ♥ Цвети да оздравяваш бързо ♥
+        </Typography> */}
+      </Box>{" "}
+      {loading && (
+        <Typography variant="h4">
+          Loading your daily choroscope please wait
+        </Typography>
+      )}
+      <Box>
+        <Grid container sx={{ display: "flex", margin: "normal" }} padding={1}>
+          {star_signs.map((e, i) => {
+            return (
+              <Grid
+                item
+                xs={4}
+                onClick={() => {
+                  if (!loading) {
+                    fetchTextPrompt(
+                      "Today's astrological reading for the star sign " + e.name
+                    );
+                  }
+                }}
+              >
+                <Typography variant="h5" sx={{ fontSize: 18 }}>
+                  {e.name}
+                </Typography>
+                <img width={80} src={getImageUrl(i)}></img>
+                <Typography sx={{ fontSize: 12 }}>{e.date}</Typography>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+      <Box sx={{ margin: "normal", mt: 2 }}>
+        <Grid container sx={{ display: "flex", margin: "normal" }}>
+          <Grid
+            item
+            xs={12}
+            sx={{ flexWrap: "wrap", margin: "normal", display: "flex" }}
+          >
+            <img
+              width={24}
+              src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
+            />
+            <Typography sx={{ ml: 1 }}>Your daily horoscope:</Typography>
+          </Grid>
+          <Grid item xs={12} sx={{ flexWrap: "wrap", mt: 2 }}>
+            <Typography>{chat}</Typography>
+          </Grid>
+        </Grid>
+      </Box>
       <Box
         sx={{
           display: "flex",
@@ -73,21 +149,7 @@ const IndexPage = () => {
           alignItems: "center",
         }}
       >
-        <TextField
-          select
-          label="Select an option"
-          value={selectedOption}
-          margin="normal"
-          sx={{ width: 200 }}
-          onChange={handleOptionChange}
-        >
-          {options.map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", ml: 1, mt: 2 }}>
           <Typography>Authoured by:</Typography>
           <Box sx={{ ml: 1, mr: 1 }}>
             <img
@@ -98,65 +160,6 @@ const IndexPage = () => {
           <Link to="https://github.com/arabovs/">arabovs</Link>
         </Box>
       </Box>
-      <Box sx={{ display: "flex", mt: 2 }}>
-        <TextField
-          fullWidth
-          label="Enter Prompt"
-          value={prompt}
-          onChange={handlePromptChange}
-          multiline
-          rows={4}
-        />
-      </Box>
-      <Box>
-        <Button
-          onClick={() => {
-            fetchDalleImage(prompt);
-            fetchTextPrompt(prompt);
-          }}
-          variant="contained"
-          sx={{ width: 200, mt: 2 }}
-        >
-          Submit
-        </Button>
-      </Box>
-      <Box sx={{ margin: "normal", mt: 2 }}>
-        <Grid container sx={{ display: "flex", margin: "normal" }}>
-          <Grid
-            item
-            xs={6}
-            sx={{ flexWrap: "wrap", margin: "normal", display: "flex" }}
-          >
-            <img
-              width={24}
-              src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
-            />
-            <Typography sx={{ ml: 1 }}>OpenAI ChatGPT3.5:</Typography>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            sx={{ flexWrap: "wrap", margin: "normal", display: "flex" }}
-          >
-            <img
-              width={24}
-              src="https://c.clc2l.com/c/thumbnail75webp/t/D/a/Dall-E-hXSMxM.png"
-            />
-            <Typography sx={{ ml: 1 }}>OpenAI DALL-E:</Typography>
-          </Grid>
-          <Grid item xs={6} sx={{ flexWrap: "wrap", mt: 2 }}>
-            <TextField fullWidth disabled value={chat} multiline rows={21} />
-          </Grid>
-          <Grid item xs={6} sx={{ flexWrap: "wrap", mt: 2 }}>
-            <StyledImg sx={{ ml: 5 }} src={image} />
-          </Grid>
-        </Grid>
-      </Box>
-      <Typography marginTop={1}>Power by:</Typography>
-      <StyledImg
-        sx={{ mt: 1 }}
-        src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg"
-      />
     </Container>
   );
 };
