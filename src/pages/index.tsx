@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-  Box,
-  Button,
-  MenuItem,
-  TextField,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { Link } from "gatsby";
 import { styled } from "@mui/material/styles";
 
@@ -55,7 +47,15 @@ const IndexPage = () => {
   };
 
   return (
-    <Container sx={{ display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        border: 1,
+        borderRadius: 1,
+        padding: 1.2,
+      }}
+    >
       <Box display="flex" justifyContent="center" alignItems="center">
         {/* <Typography variant="h4" sx={{ color: "pink" }}>
           ♥ Цвети да оздравяваш бързо ♥
@@ -105,7 +105,7 @@ const IndexPage = () => {
             <Typography sx={{ ml: 1 }}>Your daily horoscope:</Typography>
           </Grid>
           <Grid item xs={12} sx={{ flexWrap: "wrap", mt: 2 }}>
-            <Typography>{chat}</Typography>
+            <Typography>{chat.replace("\n", "")}</Typography>
           </Grid>
         </Grid>
       </Box>
@@ -127,7 +127,7 @@ const IndexPage = () => {
           <Link to="https://github.com/arabovs/">arabovs</Link>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 
