@@ -107,8 +107,13 @@ const TarotPage = () => {
   const cardbackUrl =
     "https://cardsbg.s3.eu-north-1.amazonaws.com/tarot/CardBacks.jpg";
 
-  const pickRandomCard = () => {
-    setCard(cards[Math.floor(Math.random() * cards.length)].url);
+  const pickRandomCard = async () => {
+    setChat("");
+    const randomCard = cards[Math.floor(Math.random() * cards.length)];
+    setCard(randomCard.url);
+    await fetchTextPrompt(
+      "Tarot card meaning for the card: " + randomCard.name
+    );
   };
 
   const getCardImage = (url) => {
@@ -130,7 +135,6 @@ const TarotPage = () => {
       <Typography
         sx={{
           fontSize: "2.5rem",
-          fontWeight: "bold",
           marginBottom: "1rem",
         }}
       >
@@ -147,7 +151,7 @@ const TarotPage = () => {
       >
         <Box>
           <img
-            sx={{
+            style={{
               width: "280px",
               borderRadius: "15px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -156,6 +160,23 @@ const TarotPage = () => {
             alt="Tarot Card"
           />
         </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "200px",
+            fontSize: "1.2rem",
+            fontWeight: "medium",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          }}
+          onClick={async (e) => {
+            if (!loading) {
+              await pickRandomCard();
+            }
+          }}
+        >
+          Generate Card
+        </Button>
         <Box
           sx={{
             marginTop: "1rem",
@@ -165,30 +186,13 @@ const TarotPage = () => {
             sx={{
               fontSize: "1.2rem",
               fontStyle: "italic",
+              whiteSpace: "pre-line",
             }}
           >
-            {/* Some description or card name */}
+            {chat}
           </Typography>
         </Box>
       </Box>
-
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{
-          width: "200px",
-          fontSize: "1.2rem",
-          fontWeight: "medium",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        }}
-        onClick={(e) => {
-          if (!loading) {
-            pickRandomCard();
-          }
-        }}
-      >
-        Generate Card
-      </Button>
     </Container>
   );
 };

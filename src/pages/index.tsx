@@ -8,18 +8,18 @@ const getImageUrl = (index: number) => {
 };
 
 const star_signs = [
-  { name: "Aries", date: "(March 21 - April 19)" },
-  { name: "Taurus", date: "(April 20 - May 20)" },
-  { name: "Gemini", date: "(May 21 - June 20)" },
-  { name: "Cancer", date: "(June 21 - July 22)" },
-  { name: "Leo", date: "(July 23 - August 22)" },
-  { name: "Virgo", date: "(August 23 - September 22)" },
-  { name: "Libra", date: "(September 23 - October 22)" },
-  { name: "Scorpio", date: "(October 23 - November 21)" },
-  { name: "Sagittarius", date: "(November 22 - December 21)" },
-  { name: "Capricorn", date: "(December 22 - January 19)" },
-  { name: "Aquarius", date: "(January 20 - February 18)" },
-  { name: "Pisces", date: "(February 19 - March 20)" },
+  { name: "Aries", date: "(Mar 21 - Apr 19)" },
+  { name: "Taurus", date: "(Apr 20 - May 20)" },
+  { name: "Gemini", date: "(May 21 - Jun 20)" },
+  { name: "Cancer", date: "(Jun 21 - Jul 22)" },
+  { name: "Leo", date: "(Jul 23 - Aug 22)" },
+  { name: "Virgo", date: "(Aug 23 - Sep 22)" },
+  { name: "Libra", date: "(Sep 23 - Oct 22)" },
+  { name: "Scorpio", date: "(Oct 23 - Nov 21)" },
+  { name: "Sagittarius", date: "(Nov 22 - Dec 21)" },
+  { name: "Capricorn", date: "(Dec 22 - Jan 19)" },
+  { name: "Aquarius", date: "(Jan 20 - Feb 18)" },
+  { name: "Pisces", date: "(Feb 19 - Mar 20)" },
 ];
 
 const StyledImg = styled("img")({
@@ -39,7 +39,7 @@ const IndexPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setChat(data.message);
+        setChat(data.message.replace(/\n/g, ""));
         setLoading(false);
       })
       .catch((error) => console.error(error));
@@ -75,13 +75,19 @@ const IndexPage = () => {
           <Grid
             container
             sx={{ display: "flex", margin: "normal" }}
-            padding={1}
+            padding={0.5}
           >
             {star_signs.map((e, i) => {
               return (
                 <Grid
                   item
                   xs={4}
+                  sx={{
+                    mt: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
                   onClick={() => {
                     if (!loading) {
                       fetchTextPrompt(
@@ -91,11 +97,21 @@ const IndexPage = () => {
                     }
                   }}
                 >
-                  <Typography variant="h5" sx={{ fontSize: 18 }}>
-                    {e.name}
-                  </Typography>
-                  <img width={80} src={getImageUrl(i)}></img>
-                  <Typography sx={{ fontSize: 12 }}>{e.date}</Typography>
+                  <Box>
+                    <Typography variant="h5" sx={{ fontSize: 18, mt: 1 }}>
+                      {e.name}
+                    </Typography>
+                  </Box>
+                  <img
+                    style={{
+                      borderRadius: "50%",
+                      width: "75px",
+                      height: "75px",
+                      marginTop: "4px",
+                    }}
+                    src={getImageUrl(i)}
+                  ></img>
+                  <Typography sx={{ fontSize: 12, mt: 1 }}>{e.date}</Typography>
                 </Grid>
               );
             })}
@@ -116,7 +132,7 @@ const IndexPage = () => {
             </Grid>
             <Grid item xs={12} sx={{ flexWrap: "wrap", mt: 2 }}>
               <Typography sx={{ fontStyle: "Apple Color Emoji" }}>
-                {chat.replace(/\n/g, "")}
+                {chat}
               </Typography>
             </Grid>
           </Grid>
